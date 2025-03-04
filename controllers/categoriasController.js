@@ -1,8 +1,6 @@
 const Categoria = require('../models/Categorias');
 const { Op } = require('sequelize');
 
-
-// Obtener todas las categorías
 const obtenerCategorias = async (req, res) => {
     try {
         const categorias = await Categoria.findAll({
@@ -18,12 +16,10 @@ const obtenerCategorias = async (req, res) => {
             categorias,
         });
     } catch (error) {
-        console.error('🔥 Error al obtener categorías:', error);
         res.status(500).json({ message: 'Error al obtener categorías.', error: error.message });
     }
 };
 
-// Agregar una nueva categoría
 const agregarCategoria = async (req, res) => {
     try {
         const { nombre, descripcion, estado } = req.body;
@@ -39,12 +35,10 @@ const agregarCategoria = async (req, res) => {
             categoria: nuevaCategoria,
         });
     } catch (error) {
-        console.error('🔥 Error al agregar categoría:', error);
         res.status(500).json({ message: 'Error al agregar categoría.', error: error.message });
     }
 };
 
-// Editar una categoría
 const editarCategoria = async (req, res) => {
     try {
         const { id } = req.params;
@@ -60,7 +54,6 @@ const editarCategoria = async (req, res) => {
 
         res.status(200).json({ message: 'Categoría actualizada exitosamente.', categoria });
     } catch (error) {
-        console.error('🔥 Error al actualizar categoría:', error);
         res.status(500).json({ message: 'Error al actualizar categoría.', error: error.message });
     }
 };

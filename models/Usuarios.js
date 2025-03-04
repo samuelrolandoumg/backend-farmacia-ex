@@ -38,7 +38,7 @@ module.exports = (sequelize, Sequelize) => {
           defaultValue: true,
       },
   }, {
-      tableName: 'usuarios', // Nombre exacto de la tabla
+      tableName: 'usuarios', 
       timestamps: false, 
   });
 

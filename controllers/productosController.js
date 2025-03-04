@@ -4,8 +4,6 @@ const cloudinary = require('../config/cloudinaryConfig');
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-
-// Configuración de almacenamiento en Cloudinary
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
@@ -17,7 +15,6 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-// Obtener todos los productos
 const obtenerProductos = async (req, res) => {
   try {
     const productos = await Producto.findAll({
@@ -34,12 +31,10 @@ const obtenerProductos = async (req, res) => {
   }
 };
 
-// Crear un producto con imagen
 const crearProducto = async (req, res) => {
   try {
     const { nombre, descripcion, precio, stock, categoria_id } = req.body;
 
-    // Validar que la categoría exista
     const categoria = await Categoria.findByPk(categoria_id);
     if (!categoria) {
       return res.status(400).json({ message: `La categoría con ID ${categoria_id} no existe.` });
@@ -65,31 +60,26 @@ const crearProducto = async (req, res) => {
   }
 };
 
-// Editar un producto
 const editarProducto = async (req, res) => {
     try {
         const { id } = req.params;
         const { nombre, descripcion, precio, stock, categoria_id } = req.body;
         let imagen_url = null;
 
-        // Verificar si la categoría existe antes de actualizar el producto
         const categoriaExiste = await Categoria.findByPk(categoria_id);
         if (!categoriaExiste) {
             return res.status(400).json({ message: `La categoría con ID ${categoria_id} no existe.` });
         }
 
-        // Verificar si el producto existe
         const producto = await Producto.findByPk(id);
         if (!producto) {
             return res.status(404).json({ message: 'Producto no encontrado.' });
         }
 
-        // Verificar si hay una nueva imagen en la solicitud
         if (req.file) {
-            imagen_url = req.file.path; // URL de Cloudinary
+            imagen_url = req.file.path;
         }
 
-        // Actualizar el producto
         await producto.update({
             nombre,
             descripcion,
@@ -114,7 +104,6 @@ const eliminarProducto = async (req, res) => {
             return res.status(404).json({ message: 'Producto no encontrado' });
         }
 
-        // Cambiar estado a false en lugar de eliminar
         await producto.update({ estado: false });
 
         res.status(200).json({ message: 'Producto eliminado correctamente' });
@@ -124,7 +113,6 @@ const eliminarProducto = async (req, res) => {
 };
 
   
-// Obtener producto por ID
 const obtenerProductoPorId = async (req, res) => {
     try {
         const { id } = req.params;

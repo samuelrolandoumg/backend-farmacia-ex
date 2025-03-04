@@ -30,7 +30,6 @@ passport.use(new GoogleStrategy({
             return done(null, false, { message: 'El usuario está inactivo. Contacta al administrador.' });
         }
 
-        // Generar token JWT
         const token = jwt.sign(
             { id: usuario.id, rol: usuario.rol }, 
             process.env.JWT_SECRET, 
