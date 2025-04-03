@@ -43,4 +43,5 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: false,
     });
 
-    module.exports = Producto;};
+    return Producto;
+;};

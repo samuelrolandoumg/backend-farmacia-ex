@@ -19,8 +19,29 @@ const sequelize = new Sequelize(
 );const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.Usuarios = require("../models/Usuarios.js")(sequelize, Sequelize);
 db.Categorias = require("../models/Categorias.js")(sequelize, Sequelize);
 db.Producto = require("../models/Producto.js")(sequelize, Sequelize);
+db.Farmacia = require("../models/Farmacia.js")(sequelize, Sequelize); 
+db.Usuarios = require("../models/Usuarios.js")(sequelize, Sequelize);
+db.Proveedor = require("../models/Proveedor.js")(sequelize, Sequelize);
+db.InventarioGeneral = require("../models/InventarioGeneral.js")(sequelize, Sequelize);
+db.DistribucionFarmacia = require("../models/DistribucionFarmacia.js")(sequelize, Sequelize);
 
-module.exports = sequelize;
+
+// 🔗 Relación: Un usuario pertenece a una farmacia
+db.Usuarios.belongsTo(db.Farmacia, {
+  foreignKey: 'idFarmacia',
+  as: 'farmacia'
+});
+
+db.InventarioGeneral.belongsTo(db.Producto, {
+  foreignKey: 'idProducto',
+  as: 'producto'
+});
+
+db.InventarioGeneral.belongsTo(db.Proveedor, {
+  foreignKey: 'idProveedor',
+  as: 'proveedor'
+});
+
+module.exports = db;

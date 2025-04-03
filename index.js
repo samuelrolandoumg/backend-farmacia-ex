@@ -2,7 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors'); 
-const sequelize = require('./config/db');
+
+const db = require('./config/db');
+const sequelize = db.sequelize;
+
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swaggerConfig');
 const passport = require('./config/authConfig');
@@ -11,6 +14,11 @@ const authRoutes = require('./routes/authRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const categoriasRoutes = require('./routes/categoriasRoutes');
 const productoRoutes = require('./routes/productosRoutes');
+const farmaciasRoutes = require('./routes/farmaciasRoutes');
+const proveedores = require('./routes/proveedores');
+const inventarioGeneral = require('./routes/inventarioGeneral');
+const distribucion = require('./routes/distribucionRoutes');
+
 const { PORT } = require("./config/db.config"); 
 
 
@@ -36,7 +44,10 @@ app.use('/auth', authRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/categorias', categoriasRoutes);
 app.use('/api/productos', productoRoutes);
-
+app.use('/api/farmacias', farmaciasRoutes);
+app.use('/api/proveedores', proveedores);
+app.use('/api/inventario-general', inventarioGeneral);
+app.use('/api/distribucion', distribucion);
 
 sequelize.sync()
   .then(() => {

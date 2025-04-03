@@ -30,16 +30,25 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING(50),
           allowNull: false,
           validate: {
-              isIn: [['operador', 'vendedor', 'admin', 'ccagent']], 
+              isIn: [['operador', 'vendedor', 'admin', 'ccagent', 'cliente']], 
           },
       },
       estado: {
           type: Sequelize.BOOLEAN,
           defaultValue: true,
       },
+      idFarmacia: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'farmacias',
+            key: 'idFarmacia'
+        }
+    }
   }, {
       tableName: 'usuarios', 
       timestamps: false, 
   });
 
-  module.exports = Usuarios;};
+  return Usuarios;
+};

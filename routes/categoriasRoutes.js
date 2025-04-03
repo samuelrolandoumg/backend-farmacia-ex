@@ -1,5 +1,5 @@
 const express = require('express');
-const { obtenerCategorias, agregarCategoria, editarCategoria } = require('../controllers/categoriasController');
+const { obtenerCategorias, agregarCategoria, editarCategoria, obtenerCategoriaPorId} = require('../controllers/categoriasController');
 
 const router = express.Router();
 
@@ -81,5 +81,28 @@ router.post('/', agregarCategoria);
  *         description: Error interno del servidor.
  */
 router.put('/:id', editarCategoria);
+
+/**
+ * @swagger
+ * /api/categorias/{id}:
+ *   get:
+ *     summary: Obtener una categoría por ID
+ *     tags: [Categorías]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID de la categoría
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Categoría obtenida exitosamente.
+ *       404:
+ *         description: Categoría no encontrada.
+ *       500:
+ *         description: Error interno del servidor.
+ */
+router.get('/:id', obtenerCategoriaPorId);
 
 module.exports = router;

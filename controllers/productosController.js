@@ -1,4 +1,6 @@
-const Producto = require('../models/Producto');
+const db = require('../config/db');
+const Producto = db.Producto;
+
 const Categoria = require('../models/Categorias');
 const cloudinary = require('../config/cloudinaryConfig');
 const multer = require('multer');

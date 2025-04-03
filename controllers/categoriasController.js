@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const obtenerCategorias = async (req, res) => {
     try {
         const categorias = await Categoria.findAll({
-            attributes: ['id', 'nombre'], 
+            attributes: ['id', 'nombre', 'descripcion', 'fecha_creacion'], 
         });
         
         if (!categorias || categorias.length === 0) {
@@ -58,4 +58,30 @@ const editarCategoria = async (req, res) => {
     }
 };
 
-module.exports = { obtenerCategorias, agregarCategoria, editarCategoria };
+const obtenerCategoriaPorId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const categoria = await Categoria.findByPk(id, {
+            attributes: ['id', 'nombre', 'descripcion', 'estado', 'fecha_creacion'],
+        });
+
+        if (!categoria) {
+            return res.status(404).json({ message: 'Categoría no encontrada.' });
+        }
+
+        res.status(200).json({
+            message: 'Categoría obtenida exitosamente.',
+            categoria,
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener la categoría.', error: error.message });
+    }
+};
+
+module.exports = {
+    obtenerCategorias,
+    agregarCategoria,
+    editarCategoria,
+    obtenerCategoriaPorId, 
+};
+
